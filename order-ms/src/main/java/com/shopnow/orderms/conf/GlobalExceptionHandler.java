@@ -16,8 +16,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(com.shopnow.orderms.conf.ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public String handleResourceNotFoundGlobal(com.shopnow.orderms.conf.ResourceNotFoundException exception) {
-        return exception.getMessage();
+    public ResponseEntity<Object> handleResourceNotFoundGlobal(com.shopnow.orderms.conf.ResourceNotFoundException exception) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "not found");
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(DataAccessException.class)
@@ -37,4 +40,5 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

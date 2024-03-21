@@ -4,25 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class UserDTO {
-    private Long id;
+public class UserDTO implements Serializable {
 
-    @NonNull
     private String username;
-    @NonNull
-    private String password;
-    @NonNull
-    private String email;
-    @NonNull
-    private String fullName;
-    public UserDTO(Long id, String username, String password, String email, String fullName) {
-        this.id = id;
+
+    private String token;
+
+    private String status;
+    public UserDTO( String token, String status, String username) {
+        this.token = token;
         this.username = username;
-        this.password = password;
-        this.email = email;
-        this.fullName = fullName;
+        this.status = status;
     }
 
 }

@@ -1,4 +1,5 @@
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/entity/dto/UserDTO.java
+/home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/conf/TokenManager.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/service/ServiceOrderItem.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/conf/GlobalExceptionHandler.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/conf/AuthEntryPointJwt.java

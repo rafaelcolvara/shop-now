@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +24,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Value("${jwt.secret}")
     private String secret;
 
+    private final TokenManager tokenManager;
+
+    @Autowired
+    public AuthTokenFilter(TokenManager tokenManager) {
+        this.tokenManager = tokenManager;
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -42,6 +49,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String username = this.getUsernameToken(token);
         UsernamePasswordAuthenticationToken authenticationToken =  new UsernamePasswordAuthenticationToken(username, null, null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        tokenManager.setJwtToken(token);
 
     }
     public String getUsernameToken(String token) {

@@ -1,5 +1,7 @@
 package com.shopnow.orderms.service;
 
+import com.shopnow.orderms.conf.ResourceNotFoundException;
+import com.shopnow.orderms.conf.TokenManager;
 import com.shopnow.orderms.entity.Order;
 import com.shopnow.orderms.entity.User;
 import com.shopnow.orderms.entity.dto.OrderDTO;
@@ -24,6 +26,7 @@ public class ServiceOrder {
     RepositoryOrder repositoryOrder;
 
     @Autowired ClientValidationService clienteValidationService;
+
 
     public Optional<OrderDTO> findByOrderId(Long id) {
         return repositoryOrder.findById(id)
@@ -51,15 +54,18 @@ public class ServiceOrder {
     }
     public OrderDTO save(OrderDTO order) {
         if (Objects.isNull(order)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pedido não pode ser nulo.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be null.");
         }
         if (Objects.isNull(order.getIdClient())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cliente não pode ser nulo.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client ID cannot be null.");
         }
         try {
-            clienteValidationService.clienteExiste(order.getIdClient());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cliente não encontrado.");
+            clienteValidationService.findClienteByCode(order.getIdClient());
+        } catch (ResourceNotFoundException re) {
+            throw re;
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client not found.");
         }
 
         return convertToOrderDTO(repositoryOrder.save(convertToOrder(order )));
