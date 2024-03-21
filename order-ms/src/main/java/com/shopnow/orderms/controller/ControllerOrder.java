@@ -1,7 +1,8 @@
-package com.shopnow.orderms.resource;
+package com.shopnow.orderms.controller;
 
 import com.shopnow.orderms.conf.ResourceNotFoundException;
 import com.shopnow.orderms.entity.Order;
+import com.shopnow.orderms.entity.dto.OrderDTO;
 import com.shopnow.orderms.service.ServiceOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,33 +11,37 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orders")
-public class ResourceOrder {
+public class ControllerOrder {
 
     @Autowired
     ServiceOrder serviceOrder;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
 
-        Order order = serviceOrder.findByOrderId(id).orElseThrow(() -> new ResourceNotFoundException("Order not found: " + id));
+        OrderDTO order = serviceOrder.findByOrderId(id)
+                 // map to DTO
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + id));
         return ResponseEntity.ok(order);
     }
-    @PostMapping("/order")
-    public ResponseEntity<Order> saveOrder(Order order) {
-        return handleOrderOperation(order, HttpStatus.CREATED);
-    }
-
-    @PatchMapping("/order/{id}")
-    public ResponseEntity<Order> alterOrder(@PathVariable Long id, @RequestBody Order order) {
-        return handleOrderOperation(order, HttpStatus.OK);
-    }
-
-    private ResponseEntity<Order> handleOrderOperation(Order order, HttpStatus status) {
-        try {
-            return new ResponseEntity<>(serviceOrder.save(order), status);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping()
+    public ResponseEntity<OrderDTO> saveOrder(@RequestBody OrderDTO order) {
+        if (order == null) {
+            throw new IllegalArgumentException("Order cannot be null");
         }
+        return new ResponseEntity<>(serviceOrder.save(order), HttpStatus.CREATED) ;
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<OrderDTO> alterOrder(@PathVariable Long id, @RequestBody OrderDTO order) {
+        if (id == null) {
+            throw new IllegalArgumentException("Order ID cannot be null");
+        }
+        if (order == null) {
+            throw new IllegalArgumentException("Order cannot be null");
+        }
+        return new ResponseEntity<>(serviceOrder.save(order), HttpStatus.OK);
+    }
+
 
 }

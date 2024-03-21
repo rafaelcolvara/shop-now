@@ -1,4 +1,4 @@
-package com.shopnow.orderms.resource;
+package com.shopnow.orderms.controller;
 
 import com.shopnow.orderms.entity.OrderItem;
 import com.shopnow.orderms.service.ServiceOrderItem;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orderItems")
-public class ResourceOrderItem {
+public class ControllerOrderItem {
 
     @Autowired
     private ServiceOrderItem orderItemService;

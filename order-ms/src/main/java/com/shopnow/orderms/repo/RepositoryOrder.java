@@ -1,2 +1,11 @@
-package com.shopnow.orderms;public class RepositoryOrder {
+package com.shopnow.orderms.repo;
+
+import com.shopnow.orderms.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RepositoryOrder extends    JpaRepository<Order, Long> {
+
+
 }

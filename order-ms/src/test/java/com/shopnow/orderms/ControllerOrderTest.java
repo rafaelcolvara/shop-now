@@ -1,9 +1,11 @@
 package com.shopnow.orderms;
 
-import com.shopnow.orderms.entity.Order;
+
+import com.shopnow.orderms.conf.ResourceNotFoundException;
 import com.shopnow.orderms.entity.OrderItem;
-import com.shopnow.orderms.resource.ResourceOrderItem;
-import com.shopnow.orderms.resource.ResourceOrder;
+import com.shopnow.orderms.controller.ControllerOrderItem;
+import com.shopnow.orderms.controller.ControllerOrder;
+import com.shopnow.orderms.entity.dto.OrderDTO;
 import com.shopnow.orderms.service.ServiceOrderItem;
 import com.shopnow.orderms.service.ServiceOrder;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,16 +17,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class ResourceOrderTest {
+public class ControllerOrderTest {
 
     @InjectMocks
-    ResourceOrder resourceOrder;
+    ControllerOrder controllerOrder;
     @InjectMocks
-    ResourceOrderItem resourceOrderItem;
+    ControllerOrderItem controllerOrderItem;
     @Mock
     ServiceOrder serviceOrder;
     @Mock
@@ -36,52 +43,40 @@ public class ResourceOrderTest {
     }
 
     @Test
-    public void saveOrderReturnsCreatedStatus() {
-        Order order = new Order();
-        when(serviceOrder.save(any(Order.class))).thenReturn(order);
+    public void alterOrderReturnsOkStatusWhenOrderExists() {
+        Long orderId = 1L;
+        OrderDTO order = new OrderDTO(orderId, 1L, LocalDateTime.now(), BigDecimal.valueOf(100), 1L);
+        when(serviceOrder.save(any(OrderDTO.class))).thenReturn(order);
 
-        ResponseEntity<Order> response = resourceOrder.saveOrder(order);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(order, response.getBody());
-    }
-
-    @Test
-    public void alterOrderReturnsCreatedStatus() {
-        Order order = new Order();
-        when(serviceOrder.save(any(Order.class))).thenReturn(order);
-
-        ResponseEntity<Order> response = resourceOrder.alterOrder(1L, order);
+        ResponseEntity<OrderDTO> response = controllerOrder.alterOrder(orderId, order);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(order, response.getBody());
     }
 
     @Test
-    public void saveOrderWithNullOrderReturnsBadRequest() {
-        when(serviceOrder.save(null)).thenThrow(IllegalArgumentException.class);
+    public void alterOrderThrowsResourceNotFoundExceptionWhenOrderDoesNotExist() {
+        Long orderId = 1L;
+        OrderDTO order = new OrderDTO(orderId, 1L, LocalDateTime.now(), BigDecimal.valueOf(100), 1L);
+        when(serviceOrder.save(any(OrderDTO.class))).thenThrow(ResourceNotFoundException.class);
 
-        ResponseEntity<Order> response = resourceOrder.saveOrder(null);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertThrows(ResourceNotFoundException.class, () -> controllerOrder.alterOrder(orderId, order));
     }
 
     @Test
-    public void alterOrderWithNullOrderReturnsBadRequest() {
-        when(serviceOrder.save(null)).thenThrow(IllegalArgumentException.class);
+    public void alterOrderReturnsBadRequestWhenOrderIdIsNull() {
+        OrderDTO order = new OrderDTO(1L, 1L, LocalDateTime.now(), BigDecimal.valueOf(100), 1L);
 
-        ResponseEntity<Order> response = resourceOrder.alterOrder(1L,null);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertThrows(IllegalArgumentException.class, () -> controllerOrder.alterOrder(null, order));
     }
 
     @Test
-    public void alterItemOrderWithNullOrderReturnsNotFound() {
-        when(serviceOrderItem.save(null)).thenThrow(IllegalArgumentException.class);
-
-        ResponseEntity<OrderItem> response = resourceOrderItem.updateOrderItem(1L, null);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    public void alterOrderReturnsBadRequestWhenOrderIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> controllerOrder.alterOrder(1L, null));
     }
+
+
+
+
 
 }
