@@ -5,6 +5,10 @@ server:
     min-response-size: 1024
   port: 8081
 
+jwt:
+  secret: "secret"
+  expiration: 86400000
+
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
