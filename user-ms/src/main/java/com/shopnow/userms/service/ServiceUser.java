@@ -1,11 +1,16 @@
 package com.shopnow.userms.service;
 
+import com.shopnow.userms.controller.ControllerUser;
 import com.shopnow.userms.entity.User;
 import com.shopnow.userms.entity.dto.PassDTO;
 import com.shopnow.userms.entity.dto.UserDTO;
+import com.shopnow.userms.entity.dto.UserUpdateDTO;
 import com.shopnow.userms.repo.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +45,28 @@ public class ServiceUser {
         newUser.setFullName(user.getFullName());
         return newUser;
     }
-    public UserDTO save(UserDTO user) {
-        return convertToUserDTO(repositoryUser.save(convertToUser(user)));
+    public UserDTO addUser(UserDTO user) {
+        UserDTO userDTO = convertToUserDTO(repositoryUser.save(convertToUser(user)));
+
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
+                .getUserById(userDTO.getId())).withSelfRel();
+        userDTO.add(selfLink);
+        return    convertToUserDTO(repositoryUser.save(convertToUser(user)));
     }
 
+    public UserUpdateDTO updateUser(String username, UserUpdateDTO user) {
+
+        User userUpdate = repositoryUser.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
+        userUpdate.setEmail(user.getEmail());
+        userUpdate.setFullName(user.getFullName());
+        userUpdate.setUsername(user.getUsername());
+        user.setId(repositoryUser.save(userUpdate).getId());
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
+                .getUserById(user.getId())).withSelfRel();
+        user.add(selfLink);
+
+        return  user;
+    }
     public Boolean savePass(PassDTO pass) {
         String pasw = new BCryptPasswordEncoder().encode(pass.getPassword());
         if (repositoryUser.updatePassword(pass.getIdUser(), pasw) != 1 ) {

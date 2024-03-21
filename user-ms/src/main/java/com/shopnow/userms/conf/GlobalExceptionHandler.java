@@ -22,13 +22,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<Object> handleDataAccessException(DataAccessException ex) {
-        // Crie e retorne uma resposta apropriada
+
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Database error");
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllergalArgumentException(IllegalAccessException ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Illegal Argument error");
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
 

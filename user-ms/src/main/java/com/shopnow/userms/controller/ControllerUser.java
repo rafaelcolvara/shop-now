@@ -1,10 +1,7 @@
 package com.shopnow.userms.controller;
 
 import com.shopnow.userms.conf.ResourceNotFoundException;
-import com.shopnow.userms.entity.dto.LoginRequestDTO;
-import com.shopnow.userms.entity.dto.PassDTO;
-import com.shopnow.userms.entity.dto.ResponseLoginDTO;
-import com.shopnow.userms.entity.dto.UserDTO;
+import com.shopnow.userms.entity.dto.*;
 import com.shopnow.userms.service.ServiceUser;
 import com.shopnow.userms.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +35,12 @@ public class ControllerUser {
     }
     @PostMapping()
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
-        return new ResponseEntity<>(serviceUser.save(user), HttpStatus.CREATED) ;
+        return new ResponseEntity<>(serviceUser.addUser(user), HttpStatus.CREATED) ;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> alterUser(@PathVariable Long id, @RequestBody UserDTO user) {
-        return new ResponseEntity<>(serviceUser.save(user), HttpStatus.OK);
+    @PutMapping("/{username}")
+    public ResponseEntity<UserUpdateDTO> alterUser(@PathVariable String username, @RequestBody UserUpdateDTO user) {
+        return new ResponseEntity<>(serviceUser.updateUser(username, user), HttpStatus.OK);
     }
 
     @PatchMapping("/password")

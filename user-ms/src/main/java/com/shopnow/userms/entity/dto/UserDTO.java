@@ -2,21 +2,26 @@ package com.shopnow.userms.entity.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 
 @Getter
 @Setter
-public class UserDTO {
+public class UserDTO  extends RepresentationModel<UserDTO> {
 
     private Long id;
 
     @NonNull
     private String username;
+
     @NonNull
     private String password;
+
     @NonNull
     private String email;
+
     @NonNull
     private String fullName;
 
