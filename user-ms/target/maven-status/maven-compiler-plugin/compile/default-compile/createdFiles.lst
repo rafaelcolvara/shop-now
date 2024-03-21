@@ -2,13 +2,11 @@ com/shopnow/userms/service/AuthService.class
 com/shopnow/userms/conf/ResourceNotFoundException.class
 com/shopnow/userms/entity/dto/PassDTO.class
 com/shopnow/userms/entity/dto/UserDTO.class
-com/shopnow/userms/entity/Role.class
 com/shopnow/userms/UserMsApplication.class
-com/shopnow/userms/repo/RoleRepository.class
 com/shopnow/userms/conf/GlobalExceptionHandler.class
+com/shopnow/userms/entity/dto/ResponseLoginDTO.class
 com/shopnow/userms/service/ServiceUser.class
 com/shopnow/userms/entity/dto/LoginRequestDTO.class
-com/shopnow/userms/entity/ERole.class
 com/shopnow/userms/service/TokenService.class
 com/shopnow/userms/controller/ControllerUser.class
 com/shopnow/userms/conf/SpringSecurityConf.class

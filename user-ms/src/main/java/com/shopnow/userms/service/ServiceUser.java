@@ -5,7 +5,7 @@ import com.shopnow.userms.entity.dto.PassDTO;
 import com.shopnow.userms.entity.dto.UserDTO;
 import com.shopnow.userms.repo.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +47,7 @@ public class ServiceUser {
     public Boolean savePass(PassDTO pass) {
         String pasw = new BCryptPasswordEncoder().encode(pass.getPassword());
         if (repositoryUser.updatePassword(pass.getIdUser(), pasw) != 1 ) {
-            throw new RuntimeException("Erro ao alterar senha");
+            throw new RuntimeException("Error updating password.");
         }
         return true;
     }
