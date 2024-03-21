@@ -5,6 +5,7 @@ import com.shopnow.userms.entity.dto.PassDTO;
 import com.shopnow.userms.entity.dto.UserDTO;
 import com.shopnow.userms.repo.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,15 +35,13 @@ public class ServiceUser {
         User newUser = new User();
         newUser.setId(user.getId());
         newUser.setUsername(user.getUsername());
-        newUser.setPassword(user.getPassword());
+        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
         newUser.setFullName(user.getFullName());
         return newUser;
     }
     public UserDTO save(UserDTO user) {
-
         return convertToUserDTO(repositoryUser.save(convertToUser(user)));
-
     }
 
     public Boolean savePass(PassDTO pass) {
@@ -51,13 +50,6 @@ public class ServiceUser {
             throw new RuntimeException("Erro ao alterar senha");
         }
         return true;
-    }
-
-
-    public Optional<UserDTO> findByUserUsernameAndPassword(String username, String password) {
-
-        return repositoryUser.findByUsernameAndPassword(username, password)
-                .map(this::convertToUserDTO);
     }
 
     public Optional<UserDTO> findByUserUsername(String username) {
