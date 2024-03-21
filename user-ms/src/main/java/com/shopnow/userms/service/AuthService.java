@@ -15,6 +15,7 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private RepositoryUser usuarioJPA;
 
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> usuario = usuarioJPA.findByUsername(s);

@@ -1,12 +1,18 @@
 package com.shopnow.userms.controller;
 
 import com.shopnow.userms.conf.ResourceNotFoundException;
+import com.shopnow.userms.entity.dto.LoginRequestDTO;
 import com.shopnow.userms.entity.dto.PassDTO;
+import com.shopnow.userms.entity.dto.ResponseLoginDTO;
 import com.shopnow.userms.entity.dto.UserDTO;
 import com.shopnow.userms.service.ServiceUser;
+import com.shopnow.userms.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +21,12 @@ public class ControllerUser {
 
     @Autowired
     ServiceUser serviceUser;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
@@ -39,10 +51,16 @@ public class ControllerUser {
         return new ResponseEntity<>(serviceUser.savePass(pass), HttpStatus.OK);
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestParam String username, @RequestParam String password) {
-        UserDTO user = serviceUser.findByUserUsernameAndPassword(username, password)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
-        return ResponseEntity.ok(user);
+    @PostMapping("/login")
+    public ResponseEntity<ResponseLoginDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        UserDTO user = serviceUser.findByUserUsername(loginRequestDTO.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + loginRequestDTO.getUsername()));
+
+        Authentication authentication = authenticationManager.authenticate(loginRequestDTO.map());
+        String token = tokenService.gerarToken(authentication);
+
+        ResponseLoginDTO response = new ResponseLoginDTO(token, "LOGGED IN", loginRequestDTO.getUsername());
+
+        return ResponseEntity.ok(response);
     }
 }

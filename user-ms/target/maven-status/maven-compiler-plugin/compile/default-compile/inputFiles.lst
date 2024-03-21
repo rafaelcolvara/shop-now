@@ -14,4 +14,5 @@
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/controller/ControllerUser.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/entity/dto/PassDTO.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/repo/RepositoryUser.java
+/home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/entity/dto/LoginRequestDTO.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/entity/User.java

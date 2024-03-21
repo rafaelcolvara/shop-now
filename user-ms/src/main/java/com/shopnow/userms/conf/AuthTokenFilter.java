@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
 
@@ -34,9 +35,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String token = recuperarToken(request);
+        boolean isLoginRequest = request.getRequestURI().contains("/user/login");
+        boolean isTokenValid = !Objects.isNull(token) && tokenService.isTokenValido(token);
 
-        boolean valido = tokenService.isTokenValido(token);
-        if (valido) {
+        if (!isLoginRequest && isTokenValid) {
             autenticarCliente(token);
         }
         filterChain.doFilter(request, response);

@@ -6,7 +6,7 @@ server:
   port: 8081
 
 jwt:
-  secret: "secret"
+  secret: "CHzvc7zsupc22jmqZTukjX8Oj+BK31G6QCq1vWyPYzsL8zAeszvFbEI8529Pzkfs7vIrzPU2cUv96+mqjSoXEA=="
   expiration: 86400000
 
 spring:
