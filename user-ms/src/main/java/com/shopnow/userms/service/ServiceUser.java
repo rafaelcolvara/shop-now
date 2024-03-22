@@ -46,12 +46,14 @@ public class ServiceUser {
         return newUser;
     }
     public UserDTO addUser(UserDTO user) {
-        UserDTO userDTO = convertToUserDTO(repositoryUser.save(convertToUser(user)));
+
+        convertToUserDTO(repositoryUser.save(convertToUser(user)));
 
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
-                .getUserById(userDTO.getId())).withSelfRel();
-        userDTO.add(selfLink);
-        return    convertToUserDTO(repositoryUser.save(convertToUser(user)));
+                .getUserById(user.getId())).withSelfRel();
+        user.add(selfLink);
+
+        return  user ;
     }
 
     public UserUpdateDTO updateUser(String username, UserUpdateDTO user) {

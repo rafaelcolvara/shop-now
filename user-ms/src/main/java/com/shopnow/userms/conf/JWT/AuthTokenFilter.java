@@ -29,7 +29,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         this.usuarioJPA = usuarioJPA;
     }
 
-    private List<String> allowedPaths = Arrays.asList("/user/login", "/user/refresh");
+    private List<String> allowedPaths = Arrays.asList("/user/login", "/user/refresh","/user/save");
     public AuthTokenFilter() {
 
     }
@@ -51,9 +51,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private void autenticarCliente(String token) {
 
-        String username = tokenService.getUsernameToken(token);
-        User usuario = usuarioJPA.findByUsername(username).get();
-        UsernamePasswordAuthenticationToken authenticationToken =  new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), null);
+        UsernamePasswordAuthenticationToken authenticationToken =  new UsernamePasswordAuthenticationToken(tokenService.getUsernameToken(token), null, null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 

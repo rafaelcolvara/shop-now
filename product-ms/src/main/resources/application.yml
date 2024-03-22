@@ -1,0 +1,40 @@
+server:
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 1024
+
+jwt:
+  secret: "CHzvc7zsupc22jmqZTukjX8Oj+BK31G6QCq1vWyPYzsL8zAeszvFbEI8529Pzkfs7vIrzPU2cUv96+mqjSoXEA=="
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://172.17.0.1:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      order_by:
+        default_null_ordering: last
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: "UTC"
+  application:
+    name: "product-ms"
+
+client:
+  service:
+    url: "http://localhost"
+    port: "8082"
+

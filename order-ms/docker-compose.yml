@@ -2,13 +2,10 @@ version: '3.1'
 
 services:
   app1:
-    &app
     image: docker.io/rcolvara/order-ms-shop-now:1.0
-    # build:
-    #   context: .
-    hostname: app1
-    expose:
-      - "8080"
+    hostname: order-ms
+    ports:
+      - "8080:8080"
     depends_on:
       - postgres
     environment:
@@ -24,8 +21,43 @@ services:
           cpus: "0.2"
           memory: "128MB"
   app2:
-    <<: *app
-    hostname: app2
+    image: docker.io/rcolvara/user-ms-shop-now:1.0
+    hostname: user-ms
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/postgres"
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "128MB"
+  app3:
+    image: docker.io/rcolvara/product-ms-shop-now:1.0
+    hostname: user-ms
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/postgres"
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "128MB"
 
   postgres:
     image: postgres:latest
@@ -50,22 +82,3 @@ services:
           cpus: "1.06"
           memory: "252MB"
 
-  nginx: # Load Balancer
-    image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - app1
-      - app2
-    ports:
-      - "9999:9999"
-    ulimits:
-      nproc: 1000000
-      nofile:
-        soft: 1000000
-        hard: 1000000
-    deploy:
-      resources:
-        limits:
-          cpus: "0.04"
-          memory: "42MB"

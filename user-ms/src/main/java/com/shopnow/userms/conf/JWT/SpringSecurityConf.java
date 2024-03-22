@@ -38,6 +38,7 @@ public class SpringSecurityConf  {
                             auth ->
                                     auth.requestMatchers(new AntPathRequestMatcher("/user/login/**")).permitAll()
                                             .requestMatchers(new AntPathRequestMatcher("/user/refresh/**")).permitAll()
+                                            .requestMatchers(new AntPathRequestMatcher("/user/save/**")).permitAll()
                                             .requestMatchers(new AntPathRequestMatcher("/user/test/**")).permitAll()
                                             .anyRequest().authenticated());
 
@@ -51,6 +52,7 @@ public class SpringSecurityConf  {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(new AntPathRequestMatcher("/user/login/**"))
+                .requestMatchers(new AntPathRequestMatcher("/user/save/**"))
                 .requestMatchers(new AntPathRequestMatcher("/user/refresh/**"));
     }
     @Bean
