@@ -27,6 +27,8 @@
 
 # Diretórios de ferramentas de desenvolvimento específicas do IntelliJ
 /.idea/
+/.idea
+.idea/
 *.iml
 *.iws
 
