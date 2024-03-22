@@ -22,7 +22,7 @@ class OrderMicroServiceApplicationTests {
 
 	@Test
 	public void testSaveAndFind() {
-		Order order = new Order();
+		Order order = new Order(1L);
 
 		repositoryOrder.save(order);
 

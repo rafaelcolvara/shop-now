@@ -1,7 +1,7 @@
 package com.shopnow.orderms.service;
 
 import com.shopnow.orderms.conf.ResourceNotFoundException;
-import com.shopnow.orderms.conf.TokenManager;
+import com.shopnow.orderms.conf.RestTemplate.RestTemplateService;
 import com.shopnow.orderms.entity.Order;
 import com.shopnow.orderms.entity.User;
 import com.shopnow.orderms.entity.dto.OrderDTO;
@@ -10,6 +10,7 @@ import com.shopnow.orderms.repo.RepositoryOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,8 @@ public class ServiceOrder {
     @Autowired
     RepositoryOrder repositoryOrder;
 
-    @Autowired ClientValidationService clienteValidationService;
+    @Autowired
+    RestTemplateService clienteValidationService;
 
 
     public Optional<OrderDTO> findByOrderId(Long id) {
@@ -43,8 +45,7 @@ public class ServiceOrder {
 
     private Order convertToOrder(OrderDTO order) {
         User userRef = new User();
-        Order newOrder = new Order();
-        newOrder.setId(order.getId());
+        Order newOrder = new Order(order.getId());
         newOrder.setOrderNumber(order.getOrderNumber());
         newOrder.setOrderDate(order.getOrderDate());
         newOrder.setTotalPrice(order.getTotalPrice());
@@ -62,6 +63,8 @@ public class ServiceOrder {
         try {
             clienteValidationService.findClienteByCode(order.getIdClient());
         } catch (ResourceNotFoundException re) {
+            throw re;
+        } catch (ResourceAccessException re) {
             throw re;
         }
         catch (Exception e) {

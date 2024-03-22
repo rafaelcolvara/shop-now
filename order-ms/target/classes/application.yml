@@ -3,6 +3,7 @@ server:
     enabled: true
     mime-types: application/json
     min-response-size: 1024
+  port: 8080
 
 jwt:
   secret: "CHzvc7zsupc22jmqZTukjX8Oj+BK31G6QCq1vWyPYzsL8zAeszvFbEI8529Pzkfs7vIrzPU2cUv96+mqjSoXEA=="
@@ -37,4 +38,9 @@ client:
   service:
     url: "http://localhost"
     port: "8081"
+
+product:
+  service:
+    url: "http://localhost"
+    port: "8082"
 

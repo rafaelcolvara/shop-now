@@ -44,7 +44,6 @@ public class ControllerUser {
 
     @PostMapping("/save")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
-        System.out.println("Entrou na controller");
         return new ResponseEntity<>(serviceUser.addUser(user), HttpStatus.CREATED);
     }
 

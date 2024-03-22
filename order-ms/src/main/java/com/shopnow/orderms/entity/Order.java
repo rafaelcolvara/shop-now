@@ -29,4 +29,8 @@ public class Order {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
 
+    public Order(Long idOrder) {
+        this.id = idOrder;
+    }
+    public Order(){}
 }

@@ -10,7 +10,7 @@ import javax.management.ConstructorParameters;
 import java.math.BigDecimal;
 
 @Getter
-@Setter // (1)
+@Setter 
 public class OrderItemDTO {
 
     private Long id;

@@ -1,6 +1,7 @@
 package com.shopnow.orderms.controller;
 
 import com.shopnow.orderms.entity.OrderItem;
+import com.shopnow.orderms.entity.dto.OrderItemDTO;
 import com.shopnow.orderms.service.ServiceOrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,20 +16,20 @@ public class ControllerOrderItem {
     private ServiceOrderItem orderItemService;
 
     @PostMapping
-    public ResponseEntity<OrderItem> createOrderItem(@RequestBody OrderItem orderItem) {
-        OrderItem savedOrderItem = orderItemService.save(orderItem);
-        return new ResponseEntity<>(savedOrderItem, HttpStatus.CREATED);
+    public ResponseEntity<OrderItemDTO> createOrderItem(@RequestBody OrderItemDTO orderItemDTO) {
+
+        return new ResponseEntity<>(orderItemService.save(orderItemDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) {
+    public ResponseEntity<OrderItemDTO> getOrderItemById(@PathVariable Long id) {
         return orderItemService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem orderItem) {
+    public ResponseEntity<OrderItemDTO> updateOrderItem(@PathVariable Long id, @RequestBody OrderItemDTO orderItem) {
         return orderItemService.findById(id)
                 .map(existingOrderItem -> {
                     orderItem.setId(id);

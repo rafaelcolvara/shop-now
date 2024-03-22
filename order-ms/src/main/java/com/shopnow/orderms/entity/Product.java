@@ -1,9 +1,6 @@
 package com.shopnow.orderms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +22,7 @@ public class Product {
     private BigDecimal price;
     private int stockQuantity;
 
+    public Product(Long idProduct) {
+        this.id = idProduct;
+    }
 }

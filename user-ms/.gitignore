@@ -12,6 +12,7 @@
 # Diretórios de build e de destino
 /bin/
 /target/
+/target
 /out/
 /build/
 
