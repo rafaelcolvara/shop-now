@@ -1,10 +1,10 @@
 package com.shopnow.userms.controller;
 
-import com.shopnow.userms.conf.ResourceNotFoundException;
 import com.shopnow.userms.entity.dto.*;
 import com.shopnow.userms.service.ServiceUser;
 import com.shopnow.userms.conf.JWT.TokenRefreshStrategy;
 import com.shopnow.userms.conf.JWT.TokenService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +38,7 @@ public class ControllerUser {
 
         UserDTO user = serviceUser.findByUserId(id)
                 // map to DTO
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
         return ResponseEntity.ok(user);
     }
 
@@ -60,7 +60,7 @@ public class ControllerUser {
     @PostMapping("/login")
     public ResponseEntity<ResponseLoginDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         UserDTO user = serviceUser.findByUserUsername(loginRequestDTO.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + loginRequestDTO.getUsername()));
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + loginRequestDTO.getUsername()));
 
         Authentication authentication = authenticationManager.authenticate(loginRequestDTO.map());
         String token = tokenService.gerarToken(authentication);

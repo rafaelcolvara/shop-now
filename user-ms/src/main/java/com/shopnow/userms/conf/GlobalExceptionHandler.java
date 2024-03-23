@@ -13,13 +13,25 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(com.shopnow.userms.conf.ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public String handleResourceNotFoundGlobal(com.shopnow.userms.conf.ResourceNotFoundException exception) {
-        return exception.getMessage();
+    public ResponseEntity<Object> handleResourceNotFoundGlobal(RuntimeException exception) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Exception error");
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException(Exception ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Exception error");
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<Object> handleDataAccessException(DataAccessException ex) {
 

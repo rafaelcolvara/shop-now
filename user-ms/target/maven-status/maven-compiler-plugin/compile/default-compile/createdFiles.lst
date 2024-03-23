@@ -1,5 +1,4 @@
 com/shopnow/userms/service/AuthService.class
-com/shopnow/userms/conf/ResourceNotFoundException.class
 com/shopnow/userms/entity/dto/PassDTO.class
 com/shopnow/userms/entity/dto/UserUpdateDTO.class
 com/shopnow/userms/conf/JWT/TokenService.class

@@ -1,7 +1,6 @@
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/conf/GlobalExceptionHandler.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/conf/JWT/TokenRefreshStrategy.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/service/ServiceUser.java
-/home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/conf/ResourceNotFoundException.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/UserMsApplication.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/service/AuthService.java
 /home/rafael/workspace/shop-now/user-ms/src/main/java/com/shopnow/userms/conf/JWT/SpringSecurityConf.java
