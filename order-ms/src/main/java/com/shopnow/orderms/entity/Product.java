@@ -20,7 +20,6 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    private int stockQuantity;
 
     public Product(Long idProduct) {
         this.id = idProduct;

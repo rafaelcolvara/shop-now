@@ -1,8 +1,6 @@
 package com.shopnow.orderms;
 
 
-import com.shopnow.orderms.conf.ResourceNotFoundException;
-import com.shopnow.orderms.entity.OrderItem;
 import com.shopnow.orderms.controller.ControllerOrderItem;
 import com.shopnow.orderms.controller.ControllerOrder;
 import com.shopnow.orderms.entity.dto.OrderDTO;
@@ -19,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

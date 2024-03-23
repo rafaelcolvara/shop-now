@@ -11,7 +11,6 @@ com/shopnow/orderms/conf/RestTemplate/RestTemplateConf.class
 com/shopnow/orderms/entity/OrderItem.class
 com/shopnow/orderms/conf/RestTemplate/RestTemplateService$1.class
 com/shopnow/orderms/conf/RestTemplate/RestTemplateService.class
-com/shopnow/orderms/conf/ResourceNotFoundException.class
 com/shopnow/orderms/conf/RestTemplate/RestTemplateService$2.class
 com/shopnow/orderms/conf/JWT/SecurityConf.class
 com/shopnow/orderms/entity/Order.class

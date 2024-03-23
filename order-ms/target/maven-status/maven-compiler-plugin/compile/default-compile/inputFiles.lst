@@ -7,7 +7,6 @@
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/entity/Product.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/OrderMicroServiceApplication.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/controller/ControllerOrder.java
-/home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/conf/ResourceNotFoundException.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/conf/RestTemplate/RestTemplateConf.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/entity/Order.java
 /home/rafael/workspace/shop-now/order-ms/src/main/java/com/shopnow/orderms/entity/OrderItem.java

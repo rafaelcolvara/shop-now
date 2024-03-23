@@ -1,9 +1,9 @@
 package com.shopnow.orderms.conf.RestTemplate;
 
-import com.shopnow.orderms.conf.ResourceNotFoundException;
 import com.shopnow.orderms.conf.JWT.TokenManager;
 import com.shopnow.orderms.entity.dto.ProductDTO;
 import com.shopnow.orderms.entity.dto.UserDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -49,7 +49,7 @@ public class RestTemplateService {
                 renewToken();
                 return makeRequest(urlCliente + "/user/" + codigoCliente, HttpMethod.GET, headers, null, new ParameterizedTypeReference<UserDTO>() {});
             } else {
-                throw new ResourceNotFoundException("Client not found: " + codigoCliente);
+                throw new EntityNotFoundException("Client not found: " + codigoCliente);
             }
         }
     }
@@ -79,7 +79,7 @@ public class RestTemplateService {
                 renewToken();
                 return makeRequest(urlProduto + "/products/" + productId, HttpMethod.GET, headers, null, new ParameterizedTypeReference<ProductDTO>() {});
             } else {
-                throw new ResourceNotFoundException("Product not found: " + productId);
+                throw new EntityNotFoundException("Product not found: " + productId);
             }
         }
     }

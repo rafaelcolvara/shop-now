@@ -1,9 +1,8 @@
 package com.shopnow.orderms.controller;
 
-import com.shopnow.orderms.conf.ResourceNotFoundException;
-import com.shopnow.orderms.entity.Order;
 import com.shopnow.orderms.entity.dto.OrderDTO;
 import com.shopnow.orderms.service.ServiceOrder;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class ControllerOrder {
 
         OrderDTO order = serviceOrder.findByOrderId(id)
                  // map to DTO
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found: " + id));
         return ResponseEntity.ok(order);
     }
     @PostMapping()
