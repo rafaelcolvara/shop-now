@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  app1:
+  order-ms:
     image: docker.io/rcolvara/order-ms-shop-now:1.0
     hostname: order-ms
     ports:
@@ -18,9 +18,9 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.2"
-          memory: "256MB"
-  app2:
+          cpus: "1.0"
+          memory: "512MB"
+  user-ms:
     image: docker.io/rcolvara/user-ms-shop-now:1.0
     hostname: user-ms
     ports:
@@ -28,21 +28,21 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=postgres"
     deploy:
       resources:
         limits:
-          cpus: "0.2"
-          memory: "256MB"
-  app3:
+          cpus: "1.0"
+          memory: "512MB"
+  product-ms:
     image: docker.io/rcolvara/product-ms-shop-now:1.0
-    hostname: user-ms
+    hostname: product-ms
     ports:
       - "8082:8080"
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=postgres"
     ulimits:
       nproc: 1000000
       nofile:
@@ -51,8 +51,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.2"
-          memory: "256MB"
+          cpus: "1.0"
+          memory: "512MB"
 
   postgres:
     image: postgres:latest
@@ -61,10 +61,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
+      - ./init-script.sh:/docker-entrypoint-initdb.d/init-script.sh
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
     ports:
       - 5432:5432
+    env_file: .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 5s
@@ -73,7 +75,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1.06"
-          memory: "252MB"
+          cpus: "1.5"
+          memory: "512MB"
 
 
