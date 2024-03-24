@@ -63,6 +63,7 @@ public class ServiceUser {
         userUpdate.setFullName(user.getFullName());
         userUpdate.setUsername(user.getUsername());
         user.setId(repositoryUser.save(userUpdate).getId());
+
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
                 .getUserById(user.getId())).withSelfRel();
         user.add(selfLink);

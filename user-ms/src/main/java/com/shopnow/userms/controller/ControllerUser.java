@@ -37,8 +37,9 @@ public class ControllerUser {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
 
         UserDTO user = serviceUser.findByUserId(id)
-                // map to DTO
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+
+
         return ResponseEntity.ok(user);
     }
 
