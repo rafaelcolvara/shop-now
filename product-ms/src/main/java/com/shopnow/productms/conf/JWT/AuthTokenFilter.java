@@ -2,6 +2,7 @@ package com.shopnow.productms.conf.JWT;
 
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -69,7 +70,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
             return true;
-        }catch (Exception e){
+        }
+        catch (ExpiredJwtException e){
+            throw e;
+        }
+        catch (Exception e){
             return false;
         }
     }

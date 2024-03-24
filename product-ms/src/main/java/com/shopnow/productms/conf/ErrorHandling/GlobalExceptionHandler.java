@@ -1,5 +1,6 @@
 package com.shopnow.productms.conf.ErrorHandling;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,24 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public ResponseEntity<Object> handleResourceNotFoundGlobal(ResourceNotFoundException exception) {
+    public ResponseEntity<Object> handleResourceNotFoundGlobal(RuntimeException exception) {
+
         Map<String, Object> body = new HashMap<>();
-        body.put("error", "not found");
+        body.put("error", "Exception error");
         body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Object> handleTokenExpiredException(ExpiredJwtException ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Token Expired error");
+        body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -37,6 +49,15 @@ public class GlobalExceptionHandler {
 
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Illegal Argument error");
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException(Exception ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Exception error");
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }

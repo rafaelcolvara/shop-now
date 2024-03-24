@@ -1,9 +1,9 @@
 package com.shopnow.productms.controller;
 
 
-import com.shopnow.productms.conf.ErrorHandling.ResourceNotFoundException;
 import com.shopnow.productms.entity.dto.ProductDTO;
 import com.shopnow.productms.service.ServiceProduct;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class ControllerProduct {
 
         ProductDTO productDTO = serviceProduct.findByProductId(id)
                  // map to DTO
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
         return ResponseEntity.ok(productDTO);
     }
     @PostMapping()
