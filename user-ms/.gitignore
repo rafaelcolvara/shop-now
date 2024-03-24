@@ -1,0 +1,83 @@
+# Arquivos compilados
+*.class
+
+# Pacotes binários
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Diretórios de build e de destino
+/bin/
+/target/
+/target
+/out/
+/build/
+
+# Arquivos de log e diretórios
+*.log
+/logs/
+
+# Diretórios de ferramentas de desenvolvimento específicas do Eclipse
+/.settings/
+/.classpath
+/.project
+/.metadata
+
+# Diretórios de ferramentas de desenvolvimento específicas do IntelliJ
+/.idea/
+.idea
+*.iml
+*.iws
+
+# Diretórios de ferramentas de desenvolvimento específicas do NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Pasta de metadados do Maven
+/.mvn/
+mvnw
+mvnw.cmd
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Arquivo de configuração local do Spring Boot
+/application.properties
+/application.yml
+/application-dev.properties
+/application-dev.yml
+/application-prod.properties
+/application-prod.yml
+
+# Arquivos de configuração do Gradle
+.gradle/
+/build/
+
+# Arquivos de configuração do SBT
+/lib_managed/
+/src_managed/
+/project/boot/
+/project/plugins/project/
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Pastas de ambiente virtual
+venv/
+venv.bak/
+virtualenv/
+virtualenv.bak/
+
+# Arquivos do ambiente Node.js
+node_modules/
+
