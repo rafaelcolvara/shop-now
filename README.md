@@ -10,6 +10,7 @@ Back-end REST-Api for manage Products, Users and Orders
 - Spring Security
 - Spring Data JPA
 - Spring Cloud Config
+- JWT
 - RestTemplate
 - Docker
 - Docker Compose
