@@ -5,7 +5,7 @@
 Back-end REST-Api for manage Products, Users and Orders
 
 # Technologies
-- Java 11
+- Java 17
 - Spring Boot
 - Spring Security
 - Spring Data JPA
