@@ -6,13 +6,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class OrderDTO {
+public class OrderDTO extends RepresentationModel<OrderDTO> {
 
     private Long id;
     private Long orderNumber;

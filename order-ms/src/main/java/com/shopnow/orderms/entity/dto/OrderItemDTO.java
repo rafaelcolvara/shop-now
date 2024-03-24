@@ -5,13 +5,14 @@ import com.shopnow.orderms.entity.Product;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.management.ConstructorParameters;
 import java.math.BigDecimal;
 
 @Getter
 @Setter 
-public class OrderItemDTO {
+public class OrderItemDTO extends RepresentationModel<OrderItemDTO> {
 
     private Long id;
     private Long idOrder;

@@ -6,6 +6,7 @@ import com.shopnow.orderms.controller.ControllerOrder;
 import com.shopnow.orderms.entity.dto.OrderDTO;
 import com.shopnow.orderms.service.ServiceOrderItem;
 import com.shopnow.orderms.service.ServiceOrder;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,9 +56,9 @@ public class ControllerOrderTest {
     public void alterOrderThrowsResourceNotFoundExceptionWhenOrderDoesNotExist() {
         Long orderId = 1L;
         OrderDTO order = new OrderDTO(orderId, 1L, LocalDateTime.now(), BigDecimal.valueOf(100), 1L);
-        when(serviceOrder.save(any(OrderDTO.class))).thenThrow(ResourceNotFoundException.class);
+        when(serviceOrder.save(any(OrderDTO.class))).thenThrow(EntityNotFoundException.class);
 
-        assertThrows(ResourceNotFoundException.class, () -> controllerOrder.alterOrder(orderId, order));
+        assertThrows(EntityNotFoundException.class, () -> controllerOrder.alterOrder(orderId, order));
     }
 
     @Test
