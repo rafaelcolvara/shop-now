@@ -57,6 +57,7 @@ services:
   postgres:
     image: postgres:latest
     environment:
+      PGUSER: postgres
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
