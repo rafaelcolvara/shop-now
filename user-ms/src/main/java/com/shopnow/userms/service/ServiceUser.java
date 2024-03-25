@@ -53,7 +53,7 @@ public class ServiceUser {
         UserDTO savedUser =  convertToUserDTO(repositoryUser.save(convertToUser(user)));
 
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
-                .getUserById(user.getId())).withSelfRel();
+                .getUserById(savedUser.getId())).withSelfRel();
         savedUser.add(selfLink);
 
         return savedUser;
