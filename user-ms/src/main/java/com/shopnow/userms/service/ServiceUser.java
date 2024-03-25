@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceUser {
@@ -46,14 +50,13 @@ public class ServiceUser {
         return newUser;
     }
     public UserDTO addUser(UserDTO user) {
-
-        convertToUserDTO(repositoryUser.save(convertToUser(user)));
+        UserDTO savedUser =  convertToUserDTO(repositoryUser.save(convertToUser(user)));
 
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
                 .getUserById(user.getId())).withSelfRel();
-        user.add(selfLink);
+        savedUser.add(selfLink);
 
-        return  user ;
+        return savedUser;
     }
 
     public UserUpdateDTO updateUser(String username, UserUpdateDTO user) {
@@ -82,5 +85,15 @@ public class ServiceUser {
         return repositoryUser.findByUsername(username)
                 .map(this::convertToUserDTO);
     }
+
+    public Iterable<UserDTO> findAll() {
+        return repositoryUser.findAll()
+                .stream()
+                .map(this::convertToUserDTO)
+                .collect(Collectors.toList());
+    }
+
+
+
 
 }

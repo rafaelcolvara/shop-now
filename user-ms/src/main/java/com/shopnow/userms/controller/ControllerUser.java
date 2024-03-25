@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/user")
@@ -33,19 +36,25 @@ public class ControllerUser {
         this.tokenService = tokenService;
         this.tokenRefreshStrategy = tokenRefreshStrategy;
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
 
         UserDTO user = serviceUser.findByUserId(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
-
-
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/save")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
-        return new ResponseEntity<>(serviceUser.addUser(user), HttpStatus.CREATED);
+        UserDTO savedUser = serviceUser.addUser(user);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .replacePath("/user/{id}")
+                .buildAndExpand(savedUser.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(savedUser);
     }
 
     @PutMapping("/{username}")
@@ -69,6 +78,12 @@ public class ControllerUser {
         ResponseLoginDTO response = new ResponseLoginDTO(token, "LOGGED IN", loginRequestDTO.getUsername());
 
         return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(serviceUser.findAll());
     }
 
     @PostMapping("/refresh")
