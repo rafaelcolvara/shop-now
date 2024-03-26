@@ -26,6 +26,8 @@ public class ServiceUser {
     @Autowired
     RepositoryUser repositoryUser;
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public Optional<UserDTO> findByUserId(Long id) {
         return repositoryUser.findById(id)
@@ -44,7 +46,7 @@ public class ServiceUser {
         User newUser = new User();
         newUser.setId(user.getId());
         newUser.setUsername(user.getUsername());
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
         newUser.setFullName(user.getFullName());
         return newUser;

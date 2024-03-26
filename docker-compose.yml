@@ -4,12 +4,11 @@ services:
   order-ms:
     image: docker.io/rcolvara/order-ms-shop-now:1.0
     hostname: order-ms
-    ports:
-      - "8080:8080"
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres"
+      SPRING_DATASOURCE_URL: "jdbc:localhost://postgres:5432/postgres?user=postgres&password=postgres"
+    network_mode: host
     ulimits:
       nproc: 1000000
       nofile:
@@ -19,30 +18,28 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: "512MB"
+          memory: "1GB"
   user-ms:
     image: docker.io/rcolvara/user-ms-shop-now:1.0
     hostname: user-ms
-    ports:
-      - "8081:8080"
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=postgres"
+      SPRING_DATASOURCE_URL: "jdbc:localhost://postgres:5432/postgres?user=postgres&password=postgres"
+    network_mode: host
     deploy:
       resources:
         limits:
           cpus: "1.0"
-          memory: "512MB"
+          memory: "1GB"
   product-ms:
     image: docker.io/rcolvara/product-ms-shop-now:1.0
     hostname: product-ms
-    ports:
-      - "8082:8080"
     depends_on:
       - postgres
+    network_mode: host
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=postgres"
+      SPRING_DATASOURCE_URL: "jdbc:localhost://postgres:5432/postgres?user=postgres&password=postgres"
     ulimits:
       nproc: 1000000
       nofile:
@@ -52,7 +49,7 @@ services:
       resources:
         limits:
           cpus: "1.0"
-          memory: "512MB"
+          memory: "1GB"
 
   postgres:
     image: postgres:latest
@@ -77,6 +74,6 @@ services:
       resources:
         limits:
           cpus: "1.5"
-          memory: "512MB"
+          memory: "1GB"
 
 

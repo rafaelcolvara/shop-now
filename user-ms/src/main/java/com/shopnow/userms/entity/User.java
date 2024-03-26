@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 20)
+    @Column(unique = false, nullable = false, length = 20)
     private String username;
 
     @Column(name = "password", length = 60, nullable = false)
@@ -55,7 +55,6 @@ public class User implements UserDetails {
 
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
-
 
     public User() {
     }

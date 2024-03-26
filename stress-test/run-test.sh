@@ -16,4 +16,4 @@ sh $GATLING_BIN_DIR/gatling.sh -rm local -s ShopNowBackendSimulation \
 
 sleep 3
 
-curl -v "http://localhost:8080/user/list-all"
+curl -v "http://localhost:8080/user/all"
