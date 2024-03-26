@@ -75,14 +75,5 @@ public class ServiceOrder {
 
     }
 
-    public List<Order> findByUserId(Long userId) {
-
-        return new ArrayList<Order>();
-    }
-
-    public List<Order> findByOrderDateBetween(LocalDateTime start, LocalDateTime end) {
-
-        return new ArrayList<Order>();
-    }
 
 }
