@@ -1,0 +1,10 @@
+{
+  "simulation": "ShopNowBackendSimulation",
+  "simulationId": "shopnowbackendsimulation-20240326003158365",
+  "start": 1711413119377,
+  "description": "DESCRICAO",
+  "scenarios": ["Creating users"],
+  "assertions": [
+
+  ]
+}
