@@ -17,6 +17,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<Object> handleResourceNotFoundGlobal(RuntimeException exception) {
 
+        System.out.println("*** Caiu no erro geral ***" );
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Exception error");
         body.put("message", exception.getMessage());

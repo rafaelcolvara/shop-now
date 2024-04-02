@@ -3,7 +3,7 @@ server:
     enabled: true
     mime-types: application/json
     min-response-size: 1024
-  port: 8080
+  port: 8082
 
 jwt:
   secret: "CHzvc7zsupc22jmqZTukjX8Oj+BK31G6QCq1vWyPYzsL8zAeszvFbEI8529Pzkfs7vIrzPU2cUv96+mqjSoXEA=="

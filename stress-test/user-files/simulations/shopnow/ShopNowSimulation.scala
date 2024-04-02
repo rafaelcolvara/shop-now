@@ -10,11 +10,11 @@ class ShopNowBackendSimulation
   extends Simulation {
 
   val httpProtocol = http
-    .baseUrl("http://localhost:8081")
+    .baseUrl("http://localhost:8089")
     .userAgentHeader("Apocalipse")
 
   val criacaoEConsultaPessoas = scenario("Creating users")
-    .feed(tsv("1_million_records.tsv").circular())
+    .feed(tsv("random_data_line.tsv").circular())
     .exec(
       http("criação")
       .post("/user/save").body(StringBody("#{payload}"))

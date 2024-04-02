@@ -17,9 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Table(name = "users" , uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")})
+@Table(name = "users" )
 public class User implements UserDetails {
 
     @Override
