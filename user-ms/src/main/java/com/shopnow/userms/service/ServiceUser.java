@@ -9,14 +9,12 @@ import com.shopnow.userms.repo.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
+
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,15 +29,7 @@ public class ServiceUser {
 
     public Optional<UserDTO> findByUserId(Long id) {
         return repositoryUser.findById(id)
-                .map(this::convertToUserDTO);
-    }
-    private UserDTO convertToUserDTO(User user) {
-
-        return new UserDTO( user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getEmail(),
-                user.getFullName());
+                .map(UserDTO::new);
     }
 
     private User convertToUser(UserDTO user) {
@@ -52,13 +42,14 @@ public class ServiceUser {
         return newUser;
     }
     public UserDTO addUser(UserDTO user) {
-        UserDTO savedUser =  convertToUserDTO(repositoryUser.save(convertToUser(user)));
+
+        User userSaved = repositoryUser.save(new User(user));
 
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
-                .getUserById(savedUser.getId())).withSelfRel();
-        savedUser.add(selfLink);
+                .getUserById(userSaved.getId())).withSelfRel();
+        userSaved.add(selfLink);
 
-        return savedUser;
+        return new UserDTO(userSaved);
     }
 
     public UserUpdateDTO updateUser(String username, UserUpdateDTO user) {
@@ -85,13 +76,13 @@ public class ServiceUser {
 
     public Optional<UserDTO> findByUserUsername(String username) {
         return repositoryUser.findByUsername(username)
-                .map(this::convertToUserDTO);
+                .map(UserDTO::new);
     }
 
     public Iterable<UserDTO> findAll() {
         return repositoryUser.findAll()
                 .stream()
-                .map(this::convertToUserDTO)
+                .map(UserDTO::new)
                 .collect(Collectors.toList());
     }
 

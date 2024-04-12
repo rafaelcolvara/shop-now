@@ -1,5 +1,6 @@
 package com.shopnow.userms.entity.dto;
 
+import com.shopnow.userms.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
@@ -33,4 +34,11 @@ public class UserDTO  extends RepresentationModel<UserDTO> {
         this.fullName = fullName;
     }
 
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.fullName = user.getFullName();
+    }
 }

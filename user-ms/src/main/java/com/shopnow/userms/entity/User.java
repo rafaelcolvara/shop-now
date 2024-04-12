@@ -1,9 +1,11 @@
 package com.shopnow.userms.entity;
 
+import com.shopnow.userms.entity.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +20,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode
 @Table(name = "users" )
-public class User implements UserDetails {
+public class User extends RepresentationModel<User> implements UserDetails  {
 
     @Override
     public boolean equals(Object o) {
@@ -57,6 +59,12 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(UserDTO user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.fullName = user.getFullName();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
