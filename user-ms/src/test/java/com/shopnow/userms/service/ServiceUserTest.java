@@ -40,10 +40,10 @@ class ServiceUserTest {
     @Mock
     private UserUpdateDTO userUpdateDTO;
 
-    @Mock
-    private PassDTO passDTO;
 
+    private PassDTO passDTO = new PassDTO(1L, "password");
 
+    private UserDTO userDTOComSenha = new UserDTO(1L, "username", "password", "email", "fullName");
 
     @Test
     void findByUserIdReturnsUser() {
@@ -64,11 +64,12 @@ class ServiceUserTest {
     @Test
     void addUserReturnsSavedUser() {
 
-        UserDTO userDTOComSenha = new UserDTO(1L, "username", "password", "email", "fullName");
+        User userToSave = new User(userDTOComSenha);
 
-        given(repositoryUser.save(user)).willReturn(user);
+        given(repositoryUser.save(userToSave)).willReturn(userToSave);
+
         UserDTO result = serviceUser.addUser(userDTOComSenha);
-        assertEquals(userDTOComSenha.getId(), result.getId());
+        assertEquals(result.getUsername(), userDTOComSenha.getUsername() );
     }
 
     @Test

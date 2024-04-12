@@ -32,19 +32,9 @@ public class ServiceUser {
                 .map(UserDTO::new);
     }
 
-    private User convertToUser(UserDTO user) {
-        User newUser = new User();
-        newUser.setId(user.getId());
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setEmail(user.getEmail());
-        newUser.setFullName(user.getFullName());
-        return newUser;
-    }
     public UserDTO addUser(UserDTO user) {
 
         User userSaved = repositoryUser.save(new User(user));
-
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControllerUser.class)
                 .getUserById(userSaved.getId())).withSelfRel();
         userSaved.add(selfLink);
@@ -85,8 +75,5 @@ public class ServiceUser {
                 .map(UserDTO::new)
                 .collect(Collectors.toList());
     }
-
-
-
 
 }
