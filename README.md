@@ -2,7 +2,8 @@
 <h1> Services SHOP-NOW </h1>
 
 # shop-now
-Back-end REST-Api for manage Products, Users and Orders
+Back-end REST-Api Microservices for manage Products, Users and Orders. 
+Use case for intreview test at WilDom
 
 # Technologies
 - Java 17
